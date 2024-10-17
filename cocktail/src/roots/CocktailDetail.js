@@ -1,17 +1,21 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CocktailDetail() {
-    const [id] = useParams();
-    const [cocktail, setCocktail] = useState;
+    const {id} = useParams();
+    const [cocktail, setCocktail] = useState(null);
 
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+    useEffect(() => {
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
     .then(response => response.json())
     .then(data => {
         setCocktail(data.drinks[0]);
       console.log(data);
     })
     .catch(error => console.log(error));
+    
+    }, [id]);
+    
 
     return (
         <div>
